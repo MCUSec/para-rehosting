@@ -19,7 +19,7 @@ You may download a full copy  [here](https://www.ndss-symposium.org/wp-content/u
 To fuzz with provided demos, please prepare the enviroment below.
 - Ubuntu 18.04
 - AFL with LLVM mode
-- Higher than LLVM 11
+	- Higher than LLVM 11
 	- Please refer to https://github.com/google/AFL and https://apt.llvm.org/
 - Pcap
 	- sudo apt install libpcap0.8-dev:i386 libpcap0.8:i386
