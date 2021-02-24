@@ -1,0 +1,89 @@
+/*******************************************************************************
+ * Copyright (c) 2014 IBM Corp.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Eclipse Distribution License v1.0 which accompany this distribution.
+ *
+ * The Eclipse Public License is available at
+ *    http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at
+ *   http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * Contributors:
+ *    Ian Craggs - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+
+#include "mbed.h"
+#include "EthernetInterface.h"
+#include "C12832_lcd.h"
+
+#include "MQTTPacket.h"
+
+DigitalOut myled(LED2);
+C12832_LCD lcd;
+
+int publish()
+{
+    MQTTPacket_connectData data = MQTTPacket_connectData_initializer;
+    int rc = 0;
+    char buf[200];
+    int buflen = sizeof(buf);
+    TCPSocketConnection mysock; 
+    MQTTString topicString = MQTTString_initializer;
+    char* payload = "I'm alive!";
+    int payloadlen = strlen(payload);
+    int len = 0;
+    
+    mysock.connect("m2m.eclipse.org", 1883);
+          
+    data.clientID.cstring = "mbed test client - Ian Craggs";
+    data.keepAliveInterval = 20;
+    data.cleansession = 1;
+    data.MQTTVersion = 3;
+
+    len = MQTTSerialize_connect(buf, buflen, &data);
+
+    topicString.cstring = "mbed NXP LPC1768";
+    len += MQTTSerialize_publish(buf + len, buflen - len, 0, 0, 0, 0, topicString, payload, payloadlen);
+
+    len += MQTTSerialize_disconnect(buf + len, buflen - len);
+
+    rc = 0;
+    while (rc < len)
+    {
+        int rc1 = mysock.send(buf, len);
+        if (rc1 == -1)
+        {
+            lcd.printf("Send failed\n");
+            break;
+        }
+        else
+            rc += rc1;
+    }
+    if (rc == len)
+        lcd.printf("Send succeeded\n");
+    wait(0.2);
+
+    return 0;
+}
+
+int main()
+{
+    EthernetInterface eth;
+    eth.init(); //Use DHCP
+    eth.connect();
+    lcd.printf("IP Address is %s\n", eth.getIPAddress());
+    
+    while(1) 
+    {
+        myled = 1;
+        publish();
+        wait(0.2);
+        myled = 0;
+        publish();
+        wait(0.2);
+    }
+    
+    eth.disconnect();
+}
