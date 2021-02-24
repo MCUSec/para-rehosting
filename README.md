@@ -27,9 +27,9 @@ To fuzz with provided demos, please prepare the enviroment below.
 ## How to fuzz
 For FreeRTOS, each demo contains a makefile and you only need to run the command `make` to build them.
 
-For Mbed OS, all demos are included in the file main.cpp and, an option `FUZZ_TARGET` is provided to choose which demo is target.
+For Mbed OS, all demos are included in the file main.cpp, and an option `FUZZ_TARGET` is provided to choose which demo is the fuzzing target.
 
-To fuzz, please use the command `afl-fuzz -m none -t 1000 -i ./in_dir -o ./our_dir ./binary_file`
+To start fuzzer, please use the command `afl-fuzz -m none -t 1000 -i ./in_dir -o ./our_dir ./binary_file`
 
 
 > *P.S.*
