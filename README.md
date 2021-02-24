@@ -32,9 +32,9 @@ For Mbed OS, all demos are included in the file main.cpp and, an option `FUZZ_TA
 To fuzz, please use the command `afl-fuzz -m none -t 1000 -i ./in_dir -o ./our_dir ./binary_file`
 
 
-> P.S.
-> 1. FreeRTOS_FATFS is patched and won't crash. If not, we couldn't reach deeper path.
-> 2. Only partial demos are uploaded. Others will come soon.
+> *P.S.*
+> 1. *FreeRTOS_FATFS is patched and won't crash. If not, we couldn't reach deeper path.*
+> 2. *Only partial demos are uploaded. Others will come soon.*
 
 ## How to port
 To port a new RTOS, you need to implement a frondend source file and a header file with the help of RTOS backend. 
