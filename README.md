@@ -33,7 +33,7 @@ To start fuzzer, please use the command `afl-fuzz -m none -t 1000 -i ./in_dir -o
 
 
 > *P.S.*
-> 1. *FreeRTOS_FATFS is patched and won't crash. If not, we couldn't reach deeper path.*
+> 1. *FreeRTOS_FATFS is patched and won't crash. If not, we couldn't reach deeper paths.*
 > 2. *Only partial demos are uploaded. Others will come soon.*
 
 ## How to port
