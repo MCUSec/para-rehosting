@@ -17,26 +17,27 @@ You may download a full copy  [here](https://www.ndss-symposium.org/wp-content/u
 
 ## How to setup
 To fuzz with provided demos, please prepare the enviroment below.
-	- Ubuntu 18.04
-	- AFL with LLVM mode
-		- Higher than LLVM 11
-		- Please refer to https://github.com/google/AFL and https://apt.llvm.org/
-	- Pcap
-		- sudo apt install libpcap0.8-dev:i386 libpcap0.8:i386
+- Ubuntu 18.04
+- AFL with LLVM mode
+- Higher than LLVM 11
+	- Please refer to https://github.com/google/AFL and https://apt.llvm.org/
+- Pcap
+	- sudo apt install libpcap0.8-dev:i386 libpcap0.8:i386
 
 ## How to fuzz
 For FreeRTOS, each demo contains a makefile and you only need to run the command `make` to build them.
+
 For Mbed OS, all demos are included in the file main.cpp and, an option `FUZZ_TARGET` is provided to choose which demo is target.
 
 To fuzz, please use the command `afl-fuzz -m none -t 1000 -i ./in_dir -o ./our_dir ./binary_file`
 
 
 > P.S.
-1. FreeRTOS_FATFS is patched and won't crash. If not, we couldn't reach deeper path.
-2. Only partial demos are uploaded. Others will come soon.
+> 1. FreeRTOS_FATFS is patched and won't crash. If not, we couldn't reach deeper path.
+> 2. Only partial demos are uploaded. Others will come soon.
 
 ## How to port
 To port a new RTOS, you need to implement a frondend source file and a header file with the help of RTOS backend. 
 Specifically, you have to implement two frontend functions for the RTOS backend.
-	- PMCU_FE_Yield(): The RTOS operations to switch the tasks with RTOS API.
-	- FE_Thread_Exit(): The RTOS operations when a task exit.
+- PMCU_FE_Yield(): The RTOS operations to switch the tasks with RTOS API.
+- FE_Thread_Exit(): The RTOS operations when a task exit.
