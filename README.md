@@ -25,6 +25,7 @@ sudo apt update
 ```bash
 sudo dpkg --add-architecture i386
 sudo apt update
+sudo apt-get install gcc-multilib g++-multilib
 ``` 
 - AFL with LLVM mode
 	- Higher than LLVM 11
