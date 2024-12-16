@@ -17,12 +17,41 @@ You may download a full copy  [here](https://www.ndss-symposium.org/wp-content/u
 
 ## How to setup
 To fuzz with provided demos, please prepare the enviroment below.
-- Ubuntu 18.04
+- Install a new Ubuntu 18.04
+```bash
+sudo apt update
+```
+- Install 32bit enviroment
+```bash
+sudo dpkg --add-architecture i386
+sudo apt update
+``` 
 - AFL with LLVM mode
 	- Higher than LLVM 11
 	- Please refer to https://github.com/google/AFL and https://apt.llvm.org/
+```bash
+## LLVM ENV
+wget https://apt.llvm.org/llvm.sh
+chmod +x llvm.sh
+sudo ./llvm.sh 12
+# You need more steps to config llvm enviroment
+# For example:
+# 	# add following to ~/.bashrc and execute command 'source ~/.bashrc'
+#		# export LLVM_CONFIG=/usr/lib/llvm-12/bin/llvm-config
+#		# export PATH=/usr/lib/llvm-12/bin:$PATH
+
+## AFL
+git clone https://github.com/google/AFL.git
+cd AFL
+make
+make -C llvm_mode
+sudo make install
+```
+
 - Pcap
-	- sudo apt install libpcap0.8-dev:i386 libpcap0.8:i386
+```bash
+sudo apt install libpcap0.8-dev:i386 libpcap0.8:i386
+```
 
 ## How to fuzz
 For FreeRTOS, each demo contains a makefile and you only need to run the command `make` to build them.
